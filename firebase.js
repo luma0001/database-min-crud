@@ -6,13 +6,10 @@ function start() {
   const endpoint = getPosts(
     "https://luma0001-c50c8-default-rtdb.europe-west1.firebasedatabase.app"
   );
-  getPosts();
 }
 
-async function getPosts() {
-  const postFetcher = await fetch(
-    `https://luma0001-c50c8-default-rtdb.europe-west1.firebasedatabase.app/posts.json`
-  );
+async function getPosts(endpoint) {
+  const postFetcher = await fetch(`${endpoint}/posts.json`);
   const data = await postFetcher.json();
   console.log(data);
   const posts = preparePostData(data);
