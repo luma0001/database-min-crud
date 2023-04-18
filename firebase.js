@@ -4,9 +4,11 @@ window.addEventListener("load", start);
 
 const endpoint =
   "https://luma0001-c50c8-default-rtdb.europe-west1.firebasedatabase.app";
+const endpoint2 = "object14.json";
 
 async function start() {
-  const posts = await getPosts(`${endpoint}/posts.json`);
+  // const posts = await getPosts(`${endpoint}/posts.json`);
+  const posts = await getPosts(`${endpoint2}/posts`);
 
   showPosts(posts);
 }
@@ -44,9 +46,15 @@ function showPost(postObject) {
   // console.log("hurra");
   const elementHTML = /*html*/ `
   <section class = "grid-element">
-  <p>${postObject.title}</p> 
+  <p>title: ${postObject.title}</p> 
   <img src= ${postObject.image}/>
+  <p>uid: ${postObject.uid}</p>
+  <P>Body: ${postObject.body}</P>
   </section> `;
+
+  // <p>Name: ${postObject.name}</p>
+  // <p>Mail: ${postObject.mail}</p>
+  // <p>phone: $${postObject.phone}</p>
 
   document
     .querySelector("#jsonObjects")
