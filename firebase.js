@@ -52,13 +52,17 @@ function showPost(postObject) {
     .querySelector("#jsonObjects")
     .insertAdjacentHTML("beforeend", elementHTML);
 
-  function showDialog() {
-    document.querySelector("#dialogTitle").textContent = `${postObject[title]}`;
-    document.querySelector("#dialogImage").textContent = `${postObject[image]}`;
+  document
+    .querySelector("#jsonObjects section:last-child")
+    .addEventListener("click", showDialog);
 
-    // document
-    //   .querySelector("#dialog")
-    //   .insertAdjacentHTML("beforebegin", dialogHTML);
+  function showDialog() {
+    document.querySelector("dialog").showModal();
+    //DOM manipulation i modal
+    document.querySelector("#dialogTitle").textContent = postObject.title;
+    document.querySelector("#dialogImage").src = postObject.image;
+
+    document.querySelector("dialog").showModal();
   }
 }
 
