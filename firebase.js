@@ -5,9 +5,9 @@ window.addEventListener("load", start);
 const endpoint =
   "https://luma0001-c50c8-default-rtdb.europe-west1.firebasedatabase.app";
 
-function start() {
-  const posts = getPosts(`${endpoint}/posts.json`);
-  console.log(posts);
+async function start() {
+  const posts = await getPosts(`${endpoint}/posts.json`);
+
   showPosts(posts);
 }
 
@@ -16,7 +16,9 @@ async function getPosts(endpoint) {
   const data = await postFetcher.json();
   const posts = preparePostData(data);
 
+  console.log("Array");
   console.log(posts);
+
   return posts;
 }
 
@@ -27,27 +29,37 @@ function preparePostData(metaObject) {
     post.id = object;
     localArray.push(post);
   }
-  console.log(localArray);
   return localArray;
 }
 
 function showPosts(objectArray) {
   // console.log(objectArray);
   // objectArray.forEarch(showPost);
-  for (const i = 0; i < objectArray.length; i++) {
-    const object = objectArray[i];
+  for (const object of objectArray) {
     showPost(object);
   }
 }
 
 function showPost(postObject) {
-  console.log("hurra");
+  // console.log("hurra");
   const elementHTML = /*html*/ `
+  <section class = "grid-element">
   <p>${postObject.title}</p> 
-  <img scr= ${postObject.image}/> `;
+  <img src= ${postObject.image}/>
+  </section> `;
+
   document
     .querySelector("#jsonObjects")
     .insertAdjacentHTML("beforeend", elementHTML);
+
+  function showDialog() {
+    document.querySelector("#dialogTitle").textContent = `${postObject[title]}`;
+    document.querySelector("#dialogImage").textContent = `${postObject[image]}`;
+
+    // document
+    //   .querySelector("#dialog")
+    //   .insertAdjacentHTML("beforebegin", dialogHTML);
+  }
 }
 
 //
