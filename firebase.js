@@ -6,6 +6,8 @@ function start() {
   const endpoint = getPosts(
     "https://luma0001-c50c8-default-rtdb.europe-west1.firebasedatabase.app"
   );
+  console.log(endpoint);
+  showPosts(endpoint);
 }
 
 async function getPosts(endpoint) {
@@ -13,7 +15,8 @@ async function getPosts(endpoint) {
   const data = await postFetcher.json();
   console.log(data);
   const posts = preparePostData(data);
-  console.log(posts);
+
+  return posts;
 }
 
 function preparePostData(metaObject) {
@@ -25,3 +28,10 @@ function preparePostData(metaObject) {
   }
   return localArray;
 }
+
+function showPosts(objectArray) {
+  for (const object in objectArray) {
+    showPost(object);
+  }
+}
+
