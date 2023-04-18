@@ -4,16 +4,23 @@ window.addEventListener("load", start);
 
 const endpoint =
   "https://luma0001-c50c8-default-rtdb.europe-west1.firebasedatabase.app";
-const endpoint2 = "object14.json";
 
 async function start() {
-  // const posts = await getPosts(`${endpoint}/posts.json`);
-  const posts = await getPosts(`${endpoint2}/posts`);
+  const posts = await getPosts(`${endpoint}/posts`);
+  // const users = await getUsers(users`${endpoint}/users`);
 
   showPosts(posts);
 }
 
 async function getPosts(endpoint) {
+  const postFetcher = await fetch(endpoint);
+  const data = await postFetcher.json();
+  const users = preparePostData(data);
+
+  return users;
+}
+
+async function getUsers() {
   const postFetcher = await fetch(endpoint);
   const data = await postFetcher.json();
   const posts = preparePostData(data);
