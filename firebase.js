@@ -2,20 +2,21 @@
 
 window.addEventListener("load", start);
 
+const endpoint =
+  "https://luma0001-c50c8-default-rtdb.europe-west1.firebasedatabase.app";
+
 function start() {
-  const endpoint = getPosts(
-    "https://luma0001-c50c8-default-rtdb.europe-west1.firebasedatabase.app"
-  );
-  console.log(endpoint);
-  showPosts(endpoint);
+  const posts = getPosts(`${endpoint}/posts.json`);
+  console.log(posts);
+  showPosts(posts);
 }
 
 async function getPosts(endpoint) {
-  const postFetcher = await fetch(`${endpoint}/posts.json`);
+  const postFetcher = await fetch(endpoint);
   const data = await postFetcher.json();
-  console.log(data);
   const posts = preparePostData(data);
 
+  console.log(posts);
   return posts;
 }
 
@@ -26,16 +27,21 @@ function preparePostData(metaObject) {
     post.id = object;
     localArray.push(post);
   }
+  console.log(localArray);
   return localArray;
 }
 
 function showPosts(objectArray) {
-  for (const object in objectArray) {
+  // console.log(objectArray);
+  // objectArray.forEarch(showPost);
+  for (const i = 0; i < objectArray.length; i++) {
+    const object = objectArray[i];
     showPost(object);
   }
 }
 
 function showPost(postObject) {
+  console.log("hurra");
   const elementHTML = /*html*/ `
   <p>${postObject.title}</p> 
   <img scr= ${postObject.image}/> `;
@@ -43,3 +49,6 @@ function showPost(postObject) {
     .querySelector("#jsonObjects")
     .insertAdjacentHTML("beforeend", elementHTML);
 }
+
+//
+// -- parse/ stringify
