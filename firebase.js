@@ -35,3 +35,11 @@ function showPosts(objectArray) {
   }
 }
 
+function showPost(postObject) {
+  const elementHTML = /*html*/ `
+  <p>${postObject.title}</p> 
+  <img scr= ${postObject.image}/> `;
+  document
+    .querySelector("#jsonObjects")
+    .insertAdjacentHTML("beforeend", elementHTML);
+}
