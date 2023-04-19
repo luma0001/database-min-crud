@@ -56,25 +56,28 @@ function showPosts(objectArray) {
 function showPost(postObject) {
   // console.log("hurra");
   const elementHTML = /*html*/ `
-  <section class = "grid-element">
+  <article class = "grid-element">
   <p>title: ${postObject.title}</p> 
   <img src= ${postObject.image}/>
   <p>uid: ${postObject.uid}</p>
   <P>Body: ${postObject.body}</P>
+  <button class="btn-update">Update</button>
   <button class="btn-delete">Delete</button>
-  </section> `;
-  //Tilføj click event til delete knappen
-  document
-    .querySelector(".btn-delete")
-    .addEventListener("click", updateClicked);
+  </article> `;
 
-  // <p>Name: ${postObject.name}</p>
-  // <p>Mail: ${postObject.mail}</p>
-  // <p>phone: $${postObject.phone}</p>
+  //Tilføj click event til delete knappen
 
   document
     .querySelector("#jsonPosts")
     .insertAdjacentHTML("beforeend", elementHTML);
+
+  document
+    .querySelector("#jsonPosts")
+    .addEventListener("click", deleteSelected);
+
+  // document
+  //   .querySelector("#jsonPosts section:last-child .btn-update")
+  //   .addEventListener("click", updateClicked);
 
   document
     .querySelector("#jsonPosts section:last-child")
@@ -90,13 +93,19 @@ function showPost(postObject) {
   }
 }
 
-function updateClicked() {
-  const title = `${postObject.title} Updated`;
-  const body = `Jeg orker ikke at skrive volapyk`;
-  const image =
-    "https://images.unsplash.com/photo-1642049888276-9c9f0a1a8758?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyOTA4MTB8MHwxfGFsbHwyfHx8fHx8Mnx8MTY0MjA3NTAwMQ&ixlib=rb-1.2.1&q=80&w=400";
+// function updateClicked() {
+//   const title = `${postObject.title} Updated`;
+//   const body = `Jeg orker ikke at skrive volapyk`;
+//   const image =
+//     "https://images.unsplash.com/photo-1642049888276-9c9f0a1a8758?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyOTA4MTB8MHwxfGFsbHwyfHx8fHx8Mnx8MTY0MjA3NTAwMQ&ixlib=rb-1.2.1&q=80&w=400";
 
-  updatePost(title, body, image);
+//   updatePost(title, body, image);
+// }
+
+function deleteSelected() {}
+
+function updatePost(title, body, image) {
+  console.log("UPDATE!!!");
 }
 
 function showUsers(usersArray) {
