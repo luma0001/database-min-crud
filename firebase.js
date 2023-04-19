@@ -7,30 +7,31 @@ const endpoint =
 
 async function start() {
   const posts = await getPosts(`${endpoint}/posts.json`);
-  const users = await getUsers(users`${endpoint}/users.json`);
+  const users = await getUsers(`${endpoint}/users.json`);
 
   showPosts(posts);
+  showUsers(users);
 }
 
 async function getPosts(endpoint) {
   const postFetcher = await fetch(endpoint);
 
   const data = await postFetcher.json();
-  const users = preparePostData(data);
+  const users = prepareData(data);
   console.log(data);
   return users;
 }
 
-async function getUsers() {
-  const postFetcher = await fetch(endpoint);
-  const data = await postFetcher.json();
-  const users = preparePostData(data);
+async function getUsers(endpoint) {
+  const userFetcher = await fetch(endpoint);
+  const data = await userFetcher.json();
+  const users = prepareData(data);
 
+  console.log(data);
   return users;
-  showUsers(users);
 }
 
-function preparePostData(metaObject) {
+function prepareData(metaObject) {
   const localArray = [];
   for (const object in metaObject) {
     const post = metaObject[object];
@@ -78,7 +79,13 @@ function showPost(postObject) {
   }
 }
 
-function showUsers(userObject) {
+function showUsers(usersArray) {
+  for (const user in usersArray) {
+    showUser(user);
+  }
+}
+
+function showUser(userObject) {
   // console.log("hurra");
   const elementHTML = /*html*/ `
   <section class = "grid-element">
