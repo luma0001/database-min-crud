@@ -72,15 +72,15 @@ function showPost(postObject) {
     .insertAdjacentHTML("beforeend", elementHTML);
 
   document
-    .querySelector("#jsonPosts")
+    .querySelector("#jsonPosts article:last-child .btn-delete")
     .addEventListener("click", deleteSelected);
 
   // document
-  //   .querySelector("#jsonPosts section:last-child .btn-update")
+  //   .querySelector("#jsonPosts article:last-child .btn-update")
   //   .addEventListener("click", updateClicked);
 
   document
-    .querySelector("#jsonPosts section:last-child")
+    .querySelector("#jsonPosts article:last-child")
     .addEventListener("click", showDialog);
 
   function showDialog() {
@@ -102,7 +102,9 @@ function showPost(postObject) {
 //   updatePost(title, body, image);
 // }
 
-function deleteSelected() {}
+function deleteSelected(id) {
+  console.log("noget");
+}
 
 function updatePost(title, body, image) {
   console.log("UPDATE!!!");
