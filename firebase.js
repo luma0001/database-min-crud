@@ -12,11 +12,11 @@ async function start() {
   showPosts(posts);
   showUsers(users);
 
-  createPost(
-    "My First Post",
-    "My body text",
-    "https://images.unsplash.com/photo-1641876749963-550554c7258d"
-  );
+  // createPost(
+  //   "My First Post",
+  //   "My body text",
+  //   "https://images.unsplash.com/photo-1641876749963-550554c7258d"
+  // );
 }
 
 async function getPosts(endpoint) {
@@ -61,9 +61,11 @@ function showPost(postObject) {
   <img src= ${postObject.image}/>
   <p>uid: ${postObject.uid}</p>
   <P>Body: ${postObject.body}</P>
+  <article/>
+  <div>
   <button class="btn-update">Update</button>
   <button class="btn-delete">Delete</button>
-  </article> `;
+  </div>`;
 
   //Tilføj click event til delete knappen
 
@@ -72,16 +74,16 @@ function showPost(postObject) {
     .insertAdjacentHTML("beforeend", elementHTML);
 
   document
-    .querySelector("#jsonPosts article:last-child .btn-delete")
-    .addEventListener("click", deleteSelected);
-
-  // document
-  //   .querySelector("#jsonPosts article:last-child .btn-update")
-  //   .addEventListener("click", updateClicked);
+    .querySelector("#jsonPosts div:last-child .btn-delete")
+    .addEventListener("click", deletePost);
 
   document
-    .querySelector("#jsonPosts article:last-child")
-    .addEventListener("click", showDialog);
+    .querySelector("#jsonPosts div:last-child .btn-update")
+    .addEventListener("click", updateClicked);
+
+  // document
+  //   .querySelector("#jsonPosts article:last-child")
+  //   .addEventListener("click", showDialog);
 
   function showDialog() {
     document.querySelector("dialog").showModal();
@@ -93,17 +95,21 @@ function showPost(postObject) {
   }
 }
 
-// function updateClicked() {
-//   const title = `${postObject.title} Updated`;
-//   const body = `Jeg orker ikke at skrive volapyk`;
-//   const image =
-//     "https://images.unsplash.com/photo-1642049888276-9c9f0a1a8758?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyOTA4MTB8MHwxfGFsbHwyfHx8fHx8Mnx8MTY0MjA3NTAwMQ&ixlib=rb-1.2.1&q=80&w=400";
+function updateClicked() {
+  const title = `${postObject.title} Updated`;
+  const body = `Jeg orker ikke at skrive volapyk`;
+  const image =
+    "https://images.unsplash.com/photo-1642049888276-9c9f0a1a8758?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyOTA4MTB8MHwxfGFsbHwyfHx8fHx8Mnx8MTY0MjA3NTAwMQ&ixlib=rb-1.2.1&q=80&w=400";
 
-//   updatePost(title, body, image);
-// }
+  updatePost(title, body, image);
+}
 
-function deleteSelected(id) {
-  console.log("noget");
+async function deletePost(id) {
+  const url = `${endpoint}/posts/${id}.json`;
+  const res = await fetch(url, { method: "DELETE" });
+  console.log(res);
+
+  // showPosts(); is not iteratble...
 }
 
 function updatePost(title, body, image) {
