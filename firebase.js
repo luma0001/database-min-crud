@@ -96,6 +96,7 @@ function showPost(postObject) {
 }
 
 function updateClicked() {
+  //what is .this
   const title = `${postObject.title} Updated`;
   const body = `Jeg orker ikke at skrive volapyk`;
   const image =
@@ -112,8 +113,15 @@ async function deletePost(id) {
   // showPosts(); is not iteratble...
 }
 
-function updatePost(title, body, image) {
+async function updatePost(title, body, image) {
   console.log("UPDATE!!!");
+  const postToUpdate = { title, image };
+  const postAsJson = JSON.stringify(postToUpdate);
+  const url = `${endpoint}/posts/${id}/.json`;
+
+  const res = await fetch(url, { method: "PUT", body: postAsJson });
+  const data = await res.json();
+  console.log(data);
 }
 
 function showUsers(usersArray) {
