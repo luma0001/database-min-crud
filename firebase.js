@@ -61,7 +61,12 @@ function showPost(postObject) {
   <img src= ${postObject.image}/>
   <p>uid: ${postObject.uid}</p>
   <P>Body: ${postObject.body}</P>
+  <button class="btn-delete">Delete</button>
   </section> `;
+  //Tilføj click event til delete knappen
+  document
+    .querySelector(".btn-delete")
+    .addEventListener("click", updateClicked);
 
   // <p>Name: ${postObject.name}</p>
   // <p>Mail: ${postObject.mail}</p>
@@ -83,6 +88,15 @@ function showPost(postObject) {
 
     document.querySelector("dialog").showModal();
   }
+}
+
+function updateClicked() {
+  const title = `${postObject.title} Updated`;
+  const body = `Jeg orker ikke at skrive volapyk`;
+  const image =
+    "https://images.unsplash.com/photo-1642049888276-9c9f0a1a8758?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyOTA4MTB8MHwxfGFsbHwyfHx8fHx8Mnx8MTY0MjA3NTAwMQ&ixlib=rb-1.2.1&q=80&w=400";
+
+  updatePost(title, body, image);
 }
 
 function showUsers(usersArray) {
