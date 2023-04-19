@@ -3,30 +3,32 @@
 window.addEventListener("load", start);
 
 const endpoint =
-  "https://luma0001-c50c8-default-rtdb.europe-west1.firebasedatabase.app/posts";
+  "https://luma0001-c50c8-default-rtdb.europe-west1.firebasedatabase.app";
 
 async function start() {
-  const posts = await getPosts(`${endpoint}/posts`);
-  // const users = await getUsers(users`${endpoint}/users`);
+  const posts = await getPosts(`${endpoint}/posts.json`);
+  const users = await getUsers(users`${endpoint}/users.json`);
 
   showPosts(posts);
 }
 
 async function getPosts(endpoint) {
   const postFetcher = await fetch(endpoint);
+
+  const data = await postFetcher.json();
+  const users = preparePostData(data);
+  console.log(data);
+  return users;
+}
+
+async function getUsers() {
+  const postFetcher = await fetch(endpoint);
   const data = await postFetcher.json();
   const users = preparePostData(data);
 
   return users;
+  showUsers(users);
 }
-
-// async function getUsers() {
-//   const postFetcher = await fetch(endpoint);
-//   const data = await postFetcher.json();
-//   const posts = preparePostData(data);
-
-//   return posts;
-// }
 
 function preparePostData(metaObject) {
   const localArray = [];
@@ -39,8 +41,6 @@ function preparePostData(metaObject) {
 }
 
 function showPosts(objectArray) {
-  // console.log(objectArray);
-  // objectArray.forEarch(showPost);
   for (const object of objectArray) {
     showPost(object);
   }
@@ -61,11 +61,11 @@ function showPost(postObject) {
   // <p>phone: $${postObject.phone}</p>
 
   document
-    .querySelector("#jsonObjects")
+    .querySelector("#jsonPosts")
     .insertAdjacentHTML("beforeend", elementHTML);
 
   document
-    .querySelector("#jsonObjects section:last-child")
+    .querySelector("#jsonPosts section:last-child")
     .addEventListener("click", showDialog);
 
   function showDialog() {
@@ -73,6 +73,40 @@ function showPost(postObject) {
     //DOM manipulation i modal
     document.querySelector("#dialogTitle").textContent = postObject.title;
     document.querySelector("#dialogImage").src = postObject.image;
+
+    document.querySelector("dialog").showModal();
+  }
+}
+
+function showUsers(userObject) {
+  // console.log("hurra");
+  const elementHTML = /*html*/ `
+  <section class = "grid-element">
+<p>Name: ${userObject.name}</p>
+  <img src= ${userObject.image}/>
+    <p>title: ${userObject.title}</p> 
+  <P>phone: ${userObject.phone}</P>
+  <p>mail: ${userObject.mail}</p>
+  <P>phone: ${userObject.phone}</P>
+  </section> `;
+
+  // <p>Name: ${postObject.name}</p>
+  // <p>Mail: ${postObject.mail}</p>
+  // <p>phone: $${postObject.phone}</p>
+
+  document
+    .querySelector("#jsonUsers")
+    .insertAdjacentHTML("beforeend", elementHTML);
+
+  document
+    .querySelector("#jsonUsers section:last-child")
+    .addEventListener("click", showDialog);
+
+  function showDialog() {
+    document.querySelector("dialog").showModal();
+    //DOM manipulation i modal
+    document.querySelector("#dialogTitle").textContent = userObject.title;
+    document.querySelector("#dialogImage").src = userObject.image;
 
     document.querySelector("dialog").showModal();
   }
