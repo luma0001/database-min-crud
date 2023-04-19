@@ -10,9 +10,13 @@ async function start() {
   const users = await getUsers(`${endpoint}/users.json`);
 
   showPosts(posts);
-  console.log(posts);
   showUsers(users);
-  console.log(users);
+
+  createPost(
+    "My First Post",
+    "My body text",
+    "https://images.unsplash.com/photo-1641876749963-550554c7258d"
+  );
 }
 
 async function getPosts(endpoint) {
@@ -121,12 +125,21 @@ function showUser(userObject) {
   }
 }
 
-function createPost(title, image, body) {
+async function createPost(title, image, body) {
   const newPost = {
-    title,
-    image,
-    body,
+    title: title,
+    image: image,
+    body: body,
   };
+  const postAsJson = JSON.stringify(newPost);
+  const response = await fetch(`${endpoint}/posts.json`, {
+    method: "POST",
+    body: postAsJson,
+  });
+  const data = await response.json();
+  console.log(data);
+
+  getPosts();
 }
 
 //
