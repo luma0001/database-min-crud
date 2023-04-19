@@ -10,7 +10,9 @@ async function start() {
   const users = await getUsers(`${endpoint}/users.json`);
 
   showPosts(posts);
+  console.log(posts);
   showUsers(users);
+  console.log(users);
 }
 
 async function getPosts(endpoint) {
@@ -18,7 +20,7 @@ async function getPosts(endpoint) {
 
   const data = await postFetcher.json();
   const users = prepareData(data);
-  console.log(data);
+
   return users;
 }
 
@@ -27,7 +29,6 @@ async function getUsers(endpoint) {
   const data = await userFetcher.json();
   const users = prepareData(data);
 
-  console.log(data);
   return users;
 }
 
@@ -42,8 +43,9 @@ function prepareData(metaObject) {
 }
 
 function showPosts(objectArray) {
-  for (const object of objectArray) {
-    showPost(object);
+  for (const postObject of objectArray) {
+    console.log(postObject);
+    showPost(postObject);
   }
 }
 
@@ -80,18 +82,18 @@ function showPost(postObject) {
 }
 
 function showUsers(usersArray) {
-  for (const user in usersArray) {
-    showUser(user);
+  for (const userObject of usersArray) {
+    console.log(userObject);
+    showUser(userObject);
   }
 }
 
 function showUser(userObject) {
-  // console.log("hurra");
   const elementHTML = /*html*/ `
   <section class = "grid-element">
-<p>Name: ${userObject.name}</p>
+  <p>name: ${userObject.name}</p>
   <img src= ${userObject.image}/>
-    <p>title: ${userObject.title}</p> 
+  <p>title: ${userObject.title}</p> 
   <P>phone: ${userObject.phone}</P>
   <p>mail: ${userObject.mail}</p>
   <P>phone: ${userObject.phone}</P>
@@ -117,6 +119,14 @@ function showUser(userObject) {
 
     document.querySelector("dialog").showModal();
   }
+}
+
+function createPost(title, image, body) {
+  const newPost = {
+    title,
+    image,
+    body,
+  };
 }
 
 //
