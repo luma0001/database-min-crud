@@ -60,16 +60,15 @@ function showPosts(objectArray) {
 function showPost(postObject) {
   // console.log("hurra");
   const elementHTML = /*html*/ `
-  <article class = "grid-element">
+  <article id= "POSTID-${postObject.uid}" class = "grid-element">
   <p>title: ${postObject.title}</p> 
   <img src= ${postObject.image}/>
   <p>uid: ${postObject.uid}</p>
   <P>Body: ${postObject.body}</P>
-  <article/>
-  <div>
   <button class="btn-update">Update</button>
   <button class="btn-delete">Delete</button>
-  </div>`;
+  <article/>
+  `;
 
   //Tilføj click event til delete knappen
 
@@ -78,11 +77,11 @@ function showPost(postObject) {
     .insertAdjacentHTML("beforeend", elementHTML);
 
   document
-    .querySelector("#jsonPosts div:last-child .btn-delete")
+    .querySelector("#jsonPosts article:last-child .btn-delete")
     .addEventListener("click", deletePost);
 
   document
-    .querySelector("#jsonPosts div:last-child .btn-update")
+    .querySelector("#jsonPosts article:last-child .btn-update")
     .addEventListener("click", updateClicked);
 
   // document
@@ -97,16 +96,21 @@ function showPost(postObject) {
 
     document.querySelector("dialog").showModal();
   }
+
+  function updateClicked() {
+    console.log("Clicked!");
+    //what is .this
+    const title = `${postObject.title} Updated`;
+    const body = `Jeg orker ikke at skrive volapyk`;
+    const image =
+      "https://images.unsplash.com/photo-1642049888276-9c9f0a1a8758?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyOTA4MTB8MHwxfGFsbHwyfHx8fHx8Mnx8MTY0MjA3NTAwMQ&ixlib=rb-1.2.1&q=80&w=400";
+
+    updatePost(postObject.id, title, body, image);
+  }
 }
 
-function updateClicked() {
-  //what is .this
-  const title = `${postObject.title} Updated`;
-  const body = `Jeg orker ikke at skrive volapyk`;
-  const image =
-    "https://images.unsplash.com/photo-1642049888276-9c9f0a1a8758?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyOTA4MTB8MHwxfGFsbHwyfHx8fHx8Mnx8MTY0MjA3NTAwMQ&ixlib=rb-1.2.1&q=80&w=400";
-
-  updatePost(title, body, image);
+function deleteClicked() {
+  deletePost(objectPost.id);
 }
 
 async function deletePost(id) {
@@ -117,15 +121,15 @@ async function deletePost(id) {
   // showPosts(); is not iteratble...
 }
 
-async function updatePost(title, body, image) {
-  console.log("UPDATE!!!");
-  const postToUpdate = { title, image };
+async function updatePost(id, title, body, image) {
+  // få postID med, split den og få -uid!
+  const postToUpdate = { title, body, image };
   const postAsJson = JSON.stringify(postToUpdate);
   const url = `${endpoint}/posts/${id}/.json`;
 
   const res = await fetch(url, { method: "PUT", body: postAsJson });
   const data = await res.json();
-  console.log(data);
+  updatePostsGrid();
 }
 
 function showUsers(usersArray) {
