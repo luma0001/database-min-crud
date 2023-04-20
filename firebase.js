@@ -6,10 +6,9 @@ const endpoint =
   "https://luma0001-c50c8-default-rtdb.europe-west1.firebasedatabase.app";
 
 async function start() {
-  const posts = await getPosts(`${endpoint}/posts.json`);
   const users = await getUsers(`${endpoint}/users.json`);
 
-  showPosts(posts);
+  updatePostsGrid();
   showUsers(users);
 
   // createPost(
@@ -17,6 +16,11 @@ async function start() {
   //   "My body text",
   //   "https://images.unsplash.com/photo-1641876749963-550554c7258d"
   // );
+}
+
+async function updatePostsGrid() {
+  const posts = await getPosts(`${endpoint}/posts.json`);
+  showPosts(posts);
 }
 
 async function getPosts(endpoint) {
