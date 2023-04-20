@@ -6,10 +6,9 @@ const endpoint =
   "https://luma0001-c50c8-default-rtdb.europe-west1.firebasedatabase.app";
 
 async function start() {
-  const users = await getUsers(`${endpoint}/users.json`);
+  // const users = await getUsers(`${endpoint}/users.json`);
 
   updatePostsGrid();
-  showUsers(users);
 
   // createPost(
   //   "My First Post",
@@ -19,6 +18,7 @@ async function start() {
 }
 
 async function updatePostsGrid() {
+  console.log("updating!");
   const posts = await getPosts(`${endpoint}/posts.json`);
   showPosts(posts);
 }
@@ -51,14 +51,15 @@ function prepareData(metaObject) {
 }
 
 function showPosts(objectArray) {
+  document.querySelector("#jsonPosts").innerHTML = "";
   for (const postObject of objectArray) {
-    console.log(postObject);
+    // console.log(postObject);
     showPost(postObject);
   }
 }
 
 function showPost(postObject) {
-  // console.log("hurra");
+  console.log(postObject);
   const elementHTML = /*html*/ `
   <article id= "POSTID-${postObject.uid}" class = "grid-element">
   <p>title: ${postObject.title}</p> 
@@ -78,7 +79,7 @@ function showPost(postObject) {
 
   document
     .querySelector("#jsonPosts article:last-child .btn-delete")
-    .addEventListener("click", deletePost);
+    .addEventListener("click", deleteClicked);
 
   document
     .querySelector("#jsonPosts article:last-child .btn-update")
@@ -107,18 +108,21 @@ function showPost(postObject) {
 
     updatePost(postObject.id, title, body, image);
   }
-}
 
-function deleteClicked() {
-  deletePost(objectPost.id);
+  function deleteClicked() {
+    console.log("delete cliked");
+    deletePost(postObject.id);
+  }
 }
 
 async function deletePost(id) {
   const url = `${endpoint}/posts/${id}.json`;
   const res = await fetch(url, { method: "DELETE" });
-  console.log(res);
 
-  // showPosts(); is not iteratble...
+  if (res.ok) {
+    console.log("This post is deleted");
+    updatePostsGrid();
+  }
 }
 
 async function updatePost(id, title, body, image) {
@@ -134,7 +138,7 @@ async function updatePost(id, title, body, image) {
 
 function showUsers(usersArray) {
   for (const userObject of usersArray) {
-    console.log(userObject);
+    // console.log(userObject);
     showUser(userObject);
   }
 }
