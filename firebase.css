@@ -3,8 +3,8 @@ body {
 }
 
 img {
-  height: 100px;
-  width: 50%;
+  height: 250px;
+  width: 100%;
 }
 
 .grid-overview {
@@ -20,8 +20,14 @@ img {
   }
 }
 
-@media (min-width: 11000px) {
+@media (min-width: 1100px) {
   .grid-overview {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
+}
+
+.grid-element {
+  margin: 2.5px;
+  padding: 2.5px;
+  background-color: cornsilk;
 }

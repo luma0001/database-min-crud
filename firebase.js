@@ -8,13 +8,11 @@ const endpoint =
 async function start() {
   // const users = await getUsers(`${endpoint}/users.json`);
 
-  updatePostsGrid();
+  document
+    .querySelector("#createNewPost")
+    .addEventListener("click", createPost);
 
-  // createPost(
-  //   "My First Post",
-  //   "My body text",
-  //   "https://images.unsplash.com/photo-1641876749963-550554c7258d"
-  // );
+  updatePostsGrid();
 }
 
 async function updatePostsGrid() {
@@ -176,11 +174,11 @@ function showUser(userObject) {
   }
 }
 
-async function createPost(title, image, body) {
+async function createPost() {
   const newPost = {
-    title: title,
-    image: image,
-    body: body,
+    title: "My First Post",
+    image: "https://images.unsplash.com/photo-1641876749963-550554c7258d",
+    body: "My body text",
   };
   const postAsJson = JSON.stringify(newPost);
   const response = await fetch(`${endpoint}/posts.json`, {
@@ -190,7 +188,7 @@ async function createPost(title, image, body) {
   const data = await response.json();
   console.log(data);
 
-  getPosts();
+  updatePostsGrid();
 }
 
 //
